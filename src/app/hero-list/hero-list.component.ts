@@ -1,14 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {HeroService} from '../hero.service';
 @Component({
   selector: 'app-hero-list',
   templateUrl: './hero-list.component.html',
-  styleUrls: ['./hero-list.component.css']
+  styleUrls: ['./hero-list.component.css'],
+  outputs:['childEvent'],
 })
 export class HeroListComponent implements OnInit {
 hero;
 message;
 heroName = "";
+@Output('childEvent')  public childEvent = new EventEmitter();
   constructor(private heroService : HeroService) { }
 
   ngOnInit() {
@@ -24,5 +26,6 @@ addHero(){
   console.log("in addHero", this.heroName);
   this.hero.push(this.heroName);
   console.log(this.hero);
+  this.childEvent.emit(this.hero);
 }
 }
